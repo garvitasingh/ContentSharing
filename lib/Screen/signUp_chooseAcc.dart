@@ -134,7 +134,7 @@ class _chooseAccountState extends State<chooseAccount> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SignUpPage(role: accountRole)),
+                        builder: (context) => Registration(role: accountRole)),
                   );
                 },
                 child: Text('SELECT',
