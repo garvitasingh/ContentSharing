@@ -1,5 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:flutter/material.dart';
 import 'package:clg_content_sharing/Models/data_models.dart';
 import 'package:clg_content_sharing/utils/app_constant.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,7 +13,21 @@ import 'package:http_parser/http_parser.dart';
 final accountProvider = ChangeNotifierProvider((ref) => AccountProvider());
 
 class AccountProvider extends ChangeNotifier {
-  List<DataModel> AlluserData = [];
+  Color AdminColor = Colors.transparent;
+  Color TeacherColor = Colors.transparent;
+  Color StudentColor = Colors.transparent;
+  Color StaffColor = Colors.transparent;
+
+  Color get setAdminColor => Colors.green;
+
+  void changeColor(String role){
+    if(role == "admin"){
+      AdminColor = Colors.green;
+      notifyListeners();
+    }
+  }
+
+  DataModel AlluserData = DataModel();
   late DataModel allData;
 
   Future<String> registerUser({
@@ -29,7 +44,7 @@ class AccountProvider extends ChangeNotifier {
     File? photo,
   }) async {
     notifyListeners();
-     AlluserData.clear();
+     // AlluserData.clear();
     String result = Constants.SUCCESS;
     Uri uri = Uri.parse("${Constants.baseUrl}/register");
 
@@ -69,10 +84,10 @@ class AccountProvider extends ChangeNotifier {
         request.send().then((response) async {
           print("object");
           print(response.statusCode);
-          if (response.statusCode == 201) {
+          if (response.statusCode == 200) {
             var resulthttp = await http.Response.fromStream(response);
             var decodedData = JSON.jsonDecode(resulthttp.body);
-            AlluserData.add(DataModel.fromJson(decodedData));
+            AlluserData = DataModel.fromJson(decodedData);
 
             print(decodedData);
             if (decodedData["Result"] == "success") {
@@ -94,22 +109,22 @@ class AccountProvider extends ChangeNotifier {
   }
 
   Future<String> login(
-      {required String creadential,
+      {required String credential,
       required String pass,
       required String role}) async {
     notifyListeners();
-    AlluserData.clear();
+    // AlluserData.clear();
     String result = Constants.SUCCESS;
 
     Uri uri = Uri.parse("${Constants.baseUrl}/login");
 
     var body;
     if (role == 'teacher') {
-      body = {"email": creadential, "role": role, "password": pass};
+      body = {"email": credential, "role": role, "password": pass};
     } else if (role == 'student') {
-      body = {"roll_number": creadential, "role": role, "password": pass};
+      body = {"roll_number": credential, "role": role, "password": pass};
     } else {
-      body = {"mobile": creadential, "role": role, "password": pass};
+      body = {"mobile": credential, "role": role, "password": pass};
     }
 
     try {
@@ -118,8 +133,8 @@ class AccountProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         var decodedData = JSON.jsonDecode(response.body);
 
-        AlluserData.add(DataModel.fromJson(decodedData));
-
+        AlluserData = DataModel.fromJson(decodedData["result"]);
+print(decodedData);
         notifyListeners();
         result = Constants.SUCCESS;
         print(AlluserData);
@@ -134,4 +149,6 @@ class AccountProvider extends ChangeNotifier {
 
     return result;
   }
+
+
 }

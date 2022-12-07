@@ -9,8 +9,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:get/get.dart';
 
-import '../Commen_Components/commen_Textfield.dart';
-import '../Commen_Components/commen_button.dart';
+import '../Common_Components/common_Textfield.dart';
+import '../Common_Components/common_button.dart';
 import '../provider/account_provider.dart';
 import '../utils/app_constant.dart';
 

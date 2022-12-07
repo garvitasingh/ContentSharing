@@ -20,7 +20,7 @@ class _chooseAccountState extends State<chooseAccount> {
   selectState(value) {
     if (value == 1) {
       accountRole = 'admin';
-      selectAdminColor = Color(0xFF35A3CB);
+      selectAdminColor = Color(0xFFEE412A);
       selectTeacherColor = Colors.transparent;
       selectStaffColor = Colors.transparent;
       selectStudentColor = Colors.transparent;
@@ -38,7 +38,7 @@ class _chooseAccountState extends State<chooseAccount> {
       selectStudentColor = Color(0xFF36A23B);
     } else if (value == 4) {
       accountRole = 'staff';
-      selectStaffColor = Color(0xFFD4C53E);
+      selectStaffColor = Color(0xFF35A3CB);
       selectAdminColor = Colors.transparent;
       selectTeacherColor = Colors.transparent;
       selectStudentColor = Colors.transparent;
