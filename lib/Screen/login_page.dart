@@ -1,25 +1,25 @@
-import 'package:clg_content_sharing/Functions/teacherLogin.dart';
-import 'package:clg_content_sharing/Functions/studentLoginApi.dart';
 import 'package:clg_content_sharing/Screen/home.dart';
 import 'package:clg_content_sharing/Screen/signUp_chooseAcc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:clg_content_sharing/utils/app_constant.dart';
 
 import '../provider/account_provider.dart';
 
-class SignUp_page extends StatefulWidget {
-  const SignUp_page({Key? key}) : super(key: key);
+class Login_page extends StatefulWidget {
+  const Login_page({Key? key}) : super(key: key);
 
   @override
-  State<SignUp_page> createState() => _SignUp_pageState();
+  State<Login_page> createState() => _Login_pageState();
 }
 
-class _SignUp_pageState extends State<SignUp_page> {
-  var selectAdminColor = Colors.transparent;
-  var selectTeacherColor = Colors.transparent;
-  var selectStudentColor = Colors.transparent;
-  var selectStaffColor = Colors.transparent;
+class _Login_pageState extends State<Login_page> {
+  Color selectAdminColor = Colors.transparent;
+  Color selectTeacherColor = Colors.transparent;
+  Color selectStudentColor = Colors.transparent;
+  Color selectStaffColor = Colors.transparent;
   var accountType = 0;
   var accountRole = 'none';
   final TextEditingController _controllerCredential = TextEditingController();
@@ -95,6 +95,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                           onPressed: () {
                             setState(() {
                               accountType = 1;
+                              // selectAdminColor = Constants.ORANGE_COLOR;
                               selectState(accountType);
                             });
                           },
@@ -205,7 +206,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                       )
                     else
                       Text(
-                        'SELECT ACCOUT TYPE TO CONTINUE',
+                        'SELECT ACCOUNT TYPE TO CONTINUE',
                         style: GoogleFonts.roboto(
                           color: selectState(accountType),
                           fontSize: 16,
@@ -283,7 +284,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                       margin: const EdgeInsets.only(right: 20, left: 20),
                       child: TextField(obscureText: true,
                         decoration: InputDecoration(prefixIcon: Icon(Icons.lock),
-                           
+
                             filled: true,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
@@ -326,8 +327,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                               var result = await ref
                                   .read(accountProvider)
                                   .login(
-                                      creadential:
-                                          _controllerCredential.text.trim(),
+                                      credential: _controllerCredential.text.trim(),
                                       pass: _controllerPass.text.trim(),
                                       role: accountRole.toString());
                               if (result == 'success') {
@@ -343,7 +343,7 @@ class _SignUp_pageState extends State<SignUp_page> {
                                     const SnackBar(
                                         backgroundColor: Colors.green,
                                         content: Text(
-                                            "Invalid Credentials, Userr not Found!!")));
+                                            "Invalid Credentials, User not Found!!")));
                               }
                             },
                             child: Container(
