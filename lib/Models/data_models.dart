@@ -8,6 +8,7 @@ class DataModel {
   String? mobile;
   String? branch;
   String? year;
+  String? specification;
   String? role;
   Null? emailVerifiedAt;
   String? password;
@@ -25,6 +26,7 @@ class DataModel {
       this.mobile,
       this.branch,
       this.year,
+      this.specification,
       this.role,
       this.emailVerifiedAt,
       this.password,
@@ -42,6 +44,7 @@ class DataModel {
     mobile = json['mobile'];
     branch = json['branch'];
     year = json['year'];
+    specification = json['specification'];
     role = json['role'];
     emailVerifiedAt = json['email_verified_at'];
     password = json['password'];
@@ -61,6 +64,7 @@ class DataModel {
     data['mobile'] = this.mobile;
     data['branch'] = this.branch;
     data['year'] = this.year;
+    data['specification'] = this.specification;
     data['role'] = this.role;
     data['email_verified_at'] = this.emailVerifiedAt;
     data['password'] = this.password;

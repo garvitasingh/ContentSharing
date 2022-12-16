@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:clg_content_sharing/Models/data_models.dart';
@@ -20,8 +19,8 @@ class AccountProvider extends ChangeNotifier {
 
   Color get setAdminColor => Colors.green;
 
-  void changeColor(String role){
-    if(role == "admin"){
+  void changeColor(String role) {
+    if (role == "admin") {
       AdminColor = Colors.green;
       notifyListeners();
     }
@@ -44,7 +43,7 @@ class AccountProvider extends ChangeNotifier {
     File? photo,
   }) async {
     notifyListeners();
-     // AlluserData.clear();
+    // AlluserData.clear();
     String result = Constants.SUCCESS;
     Uri uri = Uri.parse("${Constants.baseUrl}/register");
 
@@ -81,13 +80,14 @@ class AccountProvider extends ChangeNotifier {
           photo.path,
           contentType: MediaType('profile', 'jpeg'),
         ));
+      }
         request.send().then((response) async {
           print("object");
           print(response.statusCode);
           if (response.statusCode == 200) {
             var resulthttp = await http.Response.fromStream(response);
             var decodedData = JSON.jsonDecode(resulthttp.body);
-            AlluserData = DataModel.fromJson(decodedData);
+            AlluserData = DataModel.fromJson(decodedData["result"]);
 
             print(decodedData);
             if (decodedData["Result"] == "success") {
@@ -98,7 +98,6 @@ class AccountProvider extends ChangeNotifier {
             result = Constants.FAILED;
           }
         });
-      }
     } catch (e) {
       print(e.toString());
       result = Constants.FAILED;
@@ -113,7 +112,7 @@ class AccountProvider extends ChangeNotifier {
       required String pass,
       required String role}) async {
     notifyListeners();
-    // AlluserData.clear();
+
     String result = Constants.SUCCESS;
 
     Uri uri = Uri.parse("${Constants.baseUrl}/login");
@@ -134,7 +133,7 @@ class AccountProvider extends ChangeNotifier {
         var decodedData = JSON.jsonDecode(response.body);
 
         AlluserData = DataModel.fromJson(decodedData["result"]);
-print(decodedData);
+        print(decodedData);
         notifyListeners();
         result = Constants.SUCCESS;
         print(AlluserData);
@@ -150,5 +149,85 @@ print(decodedData);
     return result;
   }
 
+  Future<String> updateProfile({
+    required String fname,
+    required String lname,
+    required String email,
+    required String roll_number,
+    required String phone,
+    required String branch,
+    required String year,
+    required String role,
+    required String specification,
+    required String pass,
+    required String profile,
+    File? photo,
+  }) async {
+    notifyListeners();
+    String result = Constants.SUCCESS;
+    Uri uri = Uri.parse("${Constants.baseUrl}/update");
+
+    var body = {
+      'f_name': fname,
+      'l_name': lname,
+      'roll_number': roll_number,
+      'email': email,
+      'mobile': phone,
+      'year': year,
+      'branch': branch,
+      'specification': specification,
+      'role': role,
+      'password': pass,
+      'profile' : profile
+    };
+print(body);
+    try {
+      var request = new http.MultipartRequest("POST", uri);
+      request.fields['f_name'] = fname;
+      request.fields['l_name'] = lname;
+      request.fields['roll_number'] = roll_number;
+      request.fields['email'] = email;
+      request.fields['mobile'] = phone;
+      request.fields['year'] = year;
+      request.fields['branch'] = branch;
+      request.fields['specification'] = specification;
+      request.fields['role'] = role;
+      request.fields['password'] = pass;
+      print(request.fields);
+
+      if (photo != null) {
+        request.files.add(await http.MultipartFile.fromPath(
+          'profile',
+          photo.path,
+          contentType: MediaType('profile', 'jpeg'),
+        ));}
+      else{
+        request.fields['profile'] = profile;
+      }
+        request.send().then((response) async {
+          print("object");
+          print(response.statusCode);
+          if (response.statusCode == 200) {
+            var resulthttp = await http.Response.fromStream(response);
+            var decodedData = JSON.jsonDecode(resulthttp.body);
+            AlluserData = DataModel.fromJson(decodedData["result"]);
+
+            print(decodedData);
+            if (decodedData["Result"] == "success") {
+              result = Constants.SUCCESS;
+              print(result);
+            }
+          } else {
+            result = Constants.FAILED;
+          }
+        });
+    } catch (e) {
+      print(e.toString());
+      result = Constants.FAILED;
+    }
+
+    notifyListeners();
+    return result;
+  }
 
 }

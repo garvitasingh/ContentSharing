@@ -1,7 +1,11 @@
 import 'dart:io';
 
 import 'package:clg_content_sharing/Common_Components/view_userProfile.dart';
+import 'package:clg_content_sharing/Screen/aboutUs.dart';
+import 'package:clg_content_sharing/Screen/contactUs.dart';
+import 'package:clg_content_sharing/Screen/privactPolicy.dart';
 import 'package:clg_content_sharing/Screen/profile.dart';
+import 'package:clg_content_sharing/Screen/termCondition.dart';
 import 'package:clg_content_sharing/provider/account_provider.dart';
 import 'package:clg_content_sharing/utils/app_constant.dart';
 import 'package:flutter/material.dart';
@@ -57,6 +61,22 @@ class _HomePageState extends State<HomePage> {
 
       return Scaffold(
           appBar: AppBar(
+              elevation: 0,
+              // backgroundColor: Colors.transparent,
+              // toolbarHeight: MediaQuery.of(context).size.height / 4,
+              flexibleSpace:Container(
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                      colors: [
+                        Constants.App_bar_blue,
+                        Constants.App_bar_light,
+                      ],
+                      begin: FractionalOffset(0.0, 0.0),
+                      end: FractionalOffset(1.0, 0.0),
+                      stops: [0.0, 1.0],
+                      tileMode: TileMode.mirror),
+                ),
+              ),
               actions: !_searchBoolean
               ?[
               IconButton(
@@ -125,6 +145,39 @@ class _HomePageState extends State<HomePage> {
                       MaterialPageRoute(
                           builder: (context) => const ProfileScreen()),
                     );
+                  },
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("Contact Us"),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute
+                          (builder: (context)=> const ContactUs()));
+                  },
+                ),
+                ListTile(
+                  title: Text("About Us"),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute
+                          (builder: (context)=> const AboutUs()));
+                  },
+                ),
+                ListTile(
+                  title: Text("Privacy and Policy"),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute
+                          (builder: (context)=> const PrivacyPolicy()));
+                  },
+                ),
+                ListTile(
+                  title: Text("Term and Conditions"),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute
+                          (builder: (context)=> const TermCondition()));
                   },
                 ),
                 ListTile(

@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:clg_content_sharing/utils/app_constant.dart';
 
 import '../provider/account_provider.dart';
+import 'HostScreen.dart';
 
 class Login_page extends StatefulWidget {
   const Login_page({Key? key}) : super(key: key);
@@ -222,7 +223,7 @@ class _Login_pageState extends State<Login_page> {
                             right: 20, left: 20, bottom: 10),
                         child: TextField(
                           decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.person),
+                              prefixIcon: const Icon(Icons.person),
                               filled: true,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20),
@@ -243,7 +244,7 @@ class _Login_pageState extends State<Login_page> {
                             right: 20, left: 20, bottom: 10),
                         child: TextField(
                           decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.phone),
+                              prefixIcon: const Icon(Icons.phone),
                               filled: true,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20),
@@ -264,7 +265,7 @@ class _Login_pageState extends State<Login_page> {
                             right: 20, left: 20, bottom: 10),
                         child: TextField(
                           decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.mail),
+                              prefixIcon: const Icon(Icons.mail),
                               filled: true,
                               fillColor: selectState(accountType),
                               border: OutlineInputBorder(
@@ -283,7 +284,7 @@ class _Login_pageState extends State<Login_page> {
                     Container(
                       margin: const EdgeInsets.only(right: 20, left: 20),
                       child: TextField(obscureText: true,
-                        decoration: InputDecoration(prefixIcon: Icon(Icons.lock),
+                        decoration: InputDecoration(prefixIcon: const Icon(Icons.lock),
 
                             filled: true,
                             border: OutlineInputBorder(
@@ -332,10 +333,10 @@ class _Login_pageState extends State<Login_page> {
                                       role: accountRole.toString());
                               if (result == 'success') {
                                 // ignore: use_build_context_synchronously
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const HomePage()),
+                                      builder: (context) => const HostScreen()),
                                 );
                               } else {
                                 // ignore: use_build_context_synchronously
