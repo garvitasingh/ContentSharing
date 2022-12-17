@@ -1,7 +1,9 @@
+import 'package:clg_content_sharing/Screen/members.dart';
 import 'package:clg_content_sharing/Screen/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
+import '../utils/app_constant.dart';
 import 'home.dart';
 
 class HostScreen extends StatefulWidget {
@@ -22,7 +24,7 @@ class _HostScreenState extends State<HostScreen> {
             screens: _buildScreens(),
             items: _navBarsItems(),
             confineInSafeArea: true,
-            backgroundColor: Colors.white,
+            backgroundColor:  Constants.LIGHT_GREEN,
             // Default is Colors.white.
             handleAndroidBackButtonPress: true,
             // Default is true.
@@ -33,8 +35,8 @@ class _HostScreenState extends State<HostScreen> {
             hideNavigationBarWhenKeyboardShows: true,
             // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
             decoration: NavBarDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              colorBehindNavBar: Colors.white,
+              // borderRadius: BorderRadius.circular(10.0),
+              colorBehindNavBar: Constants.LIGHT_GREEN,
             ),
             popAllScreensOnTapOfSelectedTab: true,
             popActionScreens: PopActionScreensType.all,
@@ -47,8 +49,7 @@ class _HostScreenState extends State<HostScreen> {
               curve: Curves.ease,
               duration: Duration(milliseconds: 200),
             ),
-            navBarStyle: NavBarStyle
-                .style1, // Choose the nav bar style with this property.
+            navBarStyle: NavBarStyle.style19, // Choose the nav bar style with this property.
           );
   }
 }
@@ -56,6 +57,7 @@ class _HostScreenState extends State<HostScreen> {
 List<Widget> _buildScreens() {
   return [
     HomePage(),
+    MemberScreen(),
     ProfileScreen()
   ];
 }
@@ -63,14 +65,20 @@ List<Widget> _buildScreens() {
 List<PersistentBottomNavBarItem> _navBarsItems() {
   return [
     PersistentBottomNavBarItem(
-      icon: Icon(Icons.home),
-      // title: ("Home"),
+      icon: Icon(Icons.groups),
+      title: ("Community"),
       activeColorPrimary: Colors.blue,
       inactiveColorPrimary:Colors.grey,
     ),
     PersistentBottomNavBarItem(
-      icon: Icon(Icons.person),
-      // title: ("Settings"),
+      icon: Icon(Icons.person_sharp),
+      title: ("Members"),
+      activeColorPrimary: Colors.blue,
+      inactiveColorPrimary:Colors.grey,
+    ),
+    PersistentBottomNavBarItem(
+      icon: Icon(Icons.account_circle),
+      title: ("Account"),
       activeColorPrimary: Colors.blue,
       inactiveColorPrimary: Colors.grey,
     ),

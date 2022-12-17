@@ -78,7 +78,7 @@ class _EditProfileState extends State<EditProfile> {
             _passwordController.text = "${viewData.AlluserData.password}";
             // _specificatoinController.text = "${viewData.AlluserData.s}"
             return SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
+              // physics: const BouncingScrollPhysics(),
               controller: scrollController,
               child: Padding(
                 padding: const EdgeInsets.all(10),

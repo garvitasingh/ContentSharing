@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:clg_content_sharing/Common_Components/view_userProfile.dart';
 import 'package:clg_content_sharing/Screen/aboutUs.dart';
 import 'package:clg_content_sharing/Screen/contactUs.dart';
+import 'package:clg_content_sharing/Screen/notification.dart';
 import 'package:clg_content_sharing/Screen/privactPolicy.dart';
 import 'package:clg_content_sharing/Screen/profile.dart';
 import 'package:clg_content_sharing/Screen/termCondition.dart';
@@ -88,7 +89,11 @@ class _HomePageState extends State<HomePage> {
                   }),
                 IconButton(
                   icon: const Icon(Icons.notifications),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(
+                            builder: (context) => NotificationScreen()));
+                  },
                 ),
               ]
               :[
@@ -246,8 +251,15 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-          ));
-    });
+          ),
+        floatingActionButton:
+        FloatingActionButton(
+          onPressed: (){},
+          child: Icon(Icons.group_add_outlined),
+        ),
+      );
+    }
+    );
   }
 
   Widget _searchTextField() {
