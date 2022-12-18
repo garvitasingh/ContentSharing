@@ -8,18 +8,22 @@ import 'package:clg_content_sharing/Screen/privactPolicy.dart';
 import 'package:clg_content_sharing/Screen/profile.dart';
 import 'package:clg_content_sharing/Screen/termCondition.dart';
 import 'package:clg_content_sharing/provider/account_provider.dart';
+import 'package:clg_content_sharing/provider/group_provider.dart';
 import 'package:clg_content_sharing/utils/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomePage extends StatefulWidget {
+import 'groupList.dart';
+import 'members.dart';
+
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   ScrollController scrollController = ScrollController();
 
   File? image;
@@ -27,16 +31,16 @@ class _HomePageState extends State<HomePage> {
   String? imagePath;
   bool _searchBoolean = false;
 
-  TextEditingController _nameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
 
-  TextEditingController _addressController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
 
-  TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
 
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
-  TextEditingController _payoutController = TextEditingController();
-  TextEditingController _addMobilenumber = TextEditingController();
+  final TextEditingController _payoutController = TextEditingController();
+  final TextEditingController _addMobilenumber = TextEditingController();
 
   ScrollController controller = ScrollController();
 
@@ -44,11 +48,23 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    setState(() {});
+    _myGroup();
   }
 
-  GlobalKey<FormState> _keyy = GlobalKey<FormState>();
+  _myGroup() async {
+    var viewUserData = ref.read(accountProvider);
+    var myGroups = await ref.read(groupProvider).myGroups(
+        adminId: viewUserData.AlluserData.id.toString());
+    var joinedGroupId = await ref.read(groupProvider).joinedGroups(
+      userId: viewUserData.AlluserData.id.toString());
+    var readGroupData = ref.read(groupProvider);
+    for(int i=0; i<readGroupData.joinedGroupId.length; i++)
+      {
+        var joinedGroupDetail = await readGroupData.joinedGroupDetail(groupId: readGroupData.joinedGroupId[i].group_id.toString());
+      }
+  }
+
+  final GlobalKey<FormState> _keyy = GlobalKey<FormState>();
 
   String? name;
   String? email;
@@ -57,17 +73,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, w) {
-      var viewData = ref.watch(accountProvider);
-      var readData = ref.read(accountProvider);
+      var viewUserData = ref.watch(accountProvider);
+      var readUserData = ref.read(accountProvider);
 
+      var viewGroupData = ref.watch(groupProvider);
+      var readGroupData = ref.read(groupProvider);
       return Scaffold(
           appBar: AppBar(
               elevation: 0,
-              // backgroundColor: Colors.transparent,
-              // toolbarHeight: MediaQuery.of(context).size.height / 4,
               flexibleSpace:Container(
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
                       colors: [
                         Constants.App_bar_blue,
                         Constants.App_bar_light,
@@ -81,7 +97,7 @@ class _HomePageState extends State<HomePage> {
               actions: !_searchBoolean
               ?[
               IconButton(
-                  icon: Icon(Icons.search),
+                  icon: const Icon(Icons.search),
                   onPressed: () {
                     setState(() {
                       _searchBoolean = true;
@@ -92,19 +108,18 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(
-                            builder: (context) => NotificationScreen()));
+                            builder: (context) => const NotificationScreen()));
                   },
                 ),
               ]
               :[
                 IconButton(
-                    icon: Icon(Icons.clear),
+                    icon: const Icon(Icons.clear),
                     onPressed: () {
                       setState(() {
                         _searchBoolean = false;
                       });
                     }),
-
               ],
             title: !_searchBoolean
                 ? const Text(
@@ -128,22 +143,31 @@ class _HomePageState extends State<HomePage> {
                         image: DecorationImage(
                             fit: BoxFit.fill,
                             image: NetworkImage(
-                                "${Constants.imageUrl}/${viewData.AlluserData.profile}"))),
+                                "${Constants.imageUrl}/${viewUserData.AlluserData.profile}"))),
                   ),
-                  accountName: Container(
-                      child: Text(
-                    '${viewData.AlluserData.fName} ${viewData.AlluserData.lName}',
+                  accountName: Text(
+                    '${viewUserData.AlluserData.fName} ${viewUserData.AlluserData.lName}',
                     style: const TextStyle(color: Colors.black),
-                  )),
-                  accountEmail: Container(
-                      child: Text(
-                    '${viewData.AlluserData.email}',
+                  ),
+                  accountEmail: Text(
+                    '${viewUserData.AlluserData.email}',
                     style: const TextStyle(color: Colors.black),
-                  )),
+                  ),
                 ),
                 ListTile(
-                  leading: Icon(Icons.person),
-                  title: Text("Profile"),
+                  leading: const Icon(Icons.person),
+                  title: const Text("Members"),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MemberScreen()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.account_box_rounded),
+                  title: const Text("Profile"),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -152,9 +176,9 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 ),
-                Divider(),
+                const Divider(),
                 ListTile(
-                  title: Text("Contact Us"),
+                  title: const Text("Contact Us"),
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute
@@ -162,7 +186,7 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
                 ListTile(
-                  title: Text("About Us"),
+                  title: const Text("About Us"),
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute
@@ -170,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
                 ListTile(
-                  title: Text("Privacy and Policy"),
+                  title: const Text("Privacy and Policy"),
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute
@@ -178,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
                 ListTile(
-                  title: Text("Term and Conditions"),
+                  title: const Text("Term and Conditions"),
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute
@@ -186,8 +210,8 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.logout_rounded),
-                  title: Text("Log Out"),
+                  leading: const Icon(Icons.logout_rounded),
+                  title: const Text("Log Out"),
                   onTap: () {},
                 )
               ],
@@ -197,8 +221,8 @@ class _HomePageState extends State<HomePage> {
             child: RefreshIndicator(
               triggerMode: RefreshIndicatorTriggerMode.anywhere,
               onRefresh: () async {
-                await readData.AlluserData;
-                setState(() {});
+                await readUserData.AlluserData;
+                await readGroupData.myGroupData;
               },
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -207,45 +231,22 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text('Joined Group List'),
-                      Divider(
-                        height: 2,
-                      ),
-                      Text('Recommended Group List'),
-                      // ListView.builder(
-                      //     shrinkWrap: true,
-                      //     physics: const NeverScrollableScrollPhysics(),
-                      //     itemCount: viewData.AlluserData.length,
-                      //     itemBuilder: ((context, index) {
-                      //       print(viewData.AlluserData.length);
-                      //       name = viewData.AlluserData[index].fName;
-                      //       email = viewData.AlluserData[index].email;
-                      //       profile = viewData.AlluserData[index].profile;
-                      //
-                      //       return UserDeatails(
-                      //           fname: viewData.AlluserData[index].fName
-                      //               .toString(),
-                      //           lname: viewData.AlluserData[index].lName
-                      //               .toString(),
-                      //           phone: viewData.AlluserData[index].mobile
-                      //               .toString(),
-                      //           email: viewData.AlluserData[index].email
-                      //               .toString(),
-                      //           user: viewData.AlluserData[index],
-                      //           temp: false,
-                      //           profile: viewData.AlluserData[index].profile
-                      //               .toString(),
-                      //           year:
-                      //               viewData.AlluserData[index].year.toString(),
-                      //           branch: viewData.AlluserData[index].branch
-                      //               .toString(),
-                      //           role:
-                      //               viewData.AlluserData[index].role.toString(),
-                      //           specification:
-                      //               viewData.AlluserData[index].role.toString(),
-                      //           index: index);
-                      //     }))
+                    children: [
+                      ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: viewGroupData.myGroupData.length,
+                          itemBuilder: ((context, index) {
+                            return GroupList(
+                              id: viewGroupData.myGroupData[index].id,
+                              title: viewGroupData.myGroupData[index].title,
+                              body: viewGroupData.myGroupData[index].body,
+                              image: viewGroupData.myGroupData[index].image,
+                              branch: viewGroupData.myGroupData[index].branch,
+                              year: viewGroupData.myGroupData[index].year,
+                              admin: viewGroupData.myGroupData[index].admin,
+                            );
+                          })),
                     ],
                   ),
                 ),
@@ -254,8 +255,10 @@ class _HomePageState extends State<HomePage> {
           ),
         floatingActionButton:
         FloatingActionButton(
-          onPressed: (){},
-          child: Icon(Icons.group_add_outlined),
+          onPressed: (){
+
+          },
+          child: const Icon(Icons.group_add_outlined),
         ),
       );
     }

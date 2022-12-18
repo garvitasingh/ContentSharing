@@ -22,10 +22,10 @@ class _MemberScreenState extends State<MemberScreen> {
       _role = viewData.AlluserData.role.toString();
       return Scaffold(
         appBar: AppBar(
-          title: Text("Members"),
+          title: const Text("Members"),
           elevation: 0,
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                   colors: [
                     Constants.App_bar_blue,
@@ -45,30 +45,30 @@ class _MemberScreenState extends State<MemberScreen> {
                 TabBar(
                   tabs: _role == "student" || _role == "teacher"
                       ? [
-                          Tab(text: 'Class'),
-                          Tab(
+                          const Tab(text: 'Class'),
+                          const Tab(
                             text: 'Faculty',
                           ),
                         ]
                       : [
-                          Tab(text: 'Class'),
-                          Tab(
+                          const Tab(text: 'Class'),
+                          const Tab(
                             text: 'Faculty',
                           ),
-                          Tab(text: 'Staff'),
-                          Tab(
+                          const Tab(text: 'Staff'),
+                          const Tab(
                             text: 'Admin',
                           ),
                         ],
                   // controller: _tabBarController,
                   // indicatorColor: Colors.blue,
-                  indicator: BoxDecoration(
+                  indicator: const BoxDecoration(
                     color: Colors.white,
                     // border: Border(bottom: BorderSide(width: 1.5, color: Colors.blue))
                   ),
                   labelColor: Colors.blue,
                   unselectedLabelColor: Colors.black,
-                  labelStyle: TextStyle(fontSize: 20),
+                  labelStyle: const TextStyle(fontSize: 20),
                 ),
                 Container(
                   height: MediaQuery.of(context).size.height * 0.6,
@@ -107,29 +107,29 @@ class _MemberScreenState extends State<MemberScreen> {
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                    image: DecorationImage(
+                    image: const DecorationImage(
                         fit: BoxFit.fill,
                         image: NetworkImage(
                           "https://images.unsplash.com/photo-1670968982568-51116a0770c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1926&q=80",
                         )),
                     borderRadius: BorderRadius.circular(10),
-                    color: Color(0xFFCFCFD0)),
+                    color: const Color(0xFFCFCFD0)),
               ),
               Container(
                 width: 160,
-                child: Text("Garvita Singh ",
+                child: const Text("Garvita Singh ",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
               ),
 
               Row(
                 children: [
                   _role == "student"
-                  ? SizedBox(width: 30,)
-                  : SizedBox(width: 1,),
-                  IconButton(onPressed: (){}, icon: Icon(Icons.message)),
+                  ? const SizedBox(width: 30,)
+                  : const SizedBox(width: 1,),
+                  IconButton(onPressed: (){}, icon: const Icon(Icons.message)),
                   _role=="student"
-                      ? SizedBox(width: 5,)
-                      :IconButton(onPressed: (){}, icon: Icon(Icons.delete))
+                      ? const SizedBox(width: 5,)
+                      :IconButton(onPressed: (){}, icon: const Icon(Icons.delete))
 
                 ],
               )

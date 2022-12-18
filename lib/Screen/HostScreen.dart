@@ -1,5 +1,6 @@
 import 'package:clg_content_sharing/Screen/members.dart';
 import 'package:clg_content_sharing/Screen/profile.dart';
+import 'package:clg_content_sharing/Screen/searchScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -57,7 +58,7 @@ class _HostScreenState extends State<HostScreen> {
 List<Widget> _buildScreens() {
   return [
     HomePage(),
-    MemberScreen(),
+    SearchScreen(),
     ProfileScreen()
   ];
 }
@@ -71,8 +72,8 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
       inactiveColorPrimary:Colors.grey,
     ),
     PersistentBottomNavBarItem(
-      icon: Icon(Icons.person_sharp),
-      title: ("Members"),
+      icon: Icon(Icons.search_rounded),
+      title: ("Search"),
       activeColorPrimary: Colors.blue,
       inactiveColorPrimary:Colors.grey,
     ),

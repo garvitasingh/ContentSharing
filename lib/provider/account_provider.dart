@@ -109,8 +109,7 @@ class AccountProvider extends ChangeNotifier {
 
   Future<String> login(
       {required String credential,
-      required String pass,
-      required String role}) async {
+      required String pass}) async {
     notifyListeners();
 
     String result = Constants.SUCCESS;
@@ -118,13 +117,13 @@ class AccountProvider extends ChangeNotifier {
     Uri uri = Uri.parse("${Constants.baseUrl}/login");
 
     var body;
-    if (role == 'teacher') {
-      body = {"email": credential, "role": role, "password": pass};
-    } else if (role == 'student') {
-      body = {"roll_number": credential, "role": role, "password": pass};
-    } else {
-      body = {"mobile": credential, "role": role, "password": pass};
-    }
+    // if (role == 'teacher') {
+    //   body = {"email": credential, "role": role, "password": pass};
+    // } else if (role == 'student') {
+    //   body = {"roll_number": credential, "role": role, "password": pass};
+    // } else {
+      body = {"mobile": credential, "password": pass};
+    // }
 
     try {
       var response = await http.post(uri, body: body);
