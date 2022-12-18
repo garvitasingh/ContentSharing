@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:clg_content_sharing/Common_Components/view_userProfile.dart';
 import 'package:clg_content_sharing/Screen/aboutUs.dart';
 import 'package:clg_content_sharing/Screen/contactUs.dart';
+import 'package:clg_content_sharing/Screen/createGroup.dart';
 import 'package:clg_content_sharing/Screen/notification.dart';
 import 'package:clg_content_sharing/Screen/privactPolicy.dart';
 import 'package:clg_content_sharing/Screen/profile.dart';
@@ -94,15 +95,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       tileMode: TileMode.mirror),
                 ),
               ),
-              actions: !_searchBoolean
-              ?[
-              IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () {
-                    setState(() {
-                      _searchBoolean = true;
-                    });
-                  }),
+              actions: [
                 IconButton(
                   icon: const Icon(Icons.notifications),
                   onPressed: () {
@@ -111,25 +104,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                             builder: (context) => const NotificationScreen()));
                   },
                 ),
-              ]
-              :[
-                IconButton(
-                    icon: const Icon(Icons.clear),
-                    onPressed: () {
-                      setState(() {
-                        _searchBoolean = false;
-                      });
-                    }),
               ],
-            title: !_searchBoolean
-                ? const Text(
-              "Search in Feed",
+            title: const Text(
+              "REC Content Sharing",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.w900),
             )
-                : _searchTextField(),
           ),
           drawer: Drawer(
             child: ListView(
@@ -256,7 +238,8 @@ class _HomePageState extends ConsumerState<HomePage> {
         floatingActionButton:
         FloatingActionButton(
           onPressed: (){
-
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context)=> CreateGroup()));
           },
           child: const Icon(Icons.group_add_outlined),
         ),
@@ -265,41 +248,41 @@ class _HomePageState extends ConsumerState<HomePage> {
     );
   }
 
-  Widget _searchTextField() {
-    return TextField(
-      onChanged: (String s) {
-        // setState(() {
-        //   _searchIndexList = [];
-        //   for (int i = 0; i < newsHeadlines.length; i++) {
-        //     if (newsHeadlines[i].title.contains(s)) {
-        //       _searchIndexList.add(i);
-        //     }
-        //   }
-        // });
-      },
-      autofocus: true,
-      cursorColor: Colors.white,
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 20,
-      ),
-      textInputAction:
-      TextInputAction.search, //Specify the action button on the keyboard
-      decoration: const InputDecoration(
-        //Style of TextField
-        enabledBorder: UnderlineInputBorder(
-          //Default TextField border
-            borderSide: BorderSide(color: Colors.white)),
-        focusedBorder: UnderlineInputBorder(
-          //Borders when a TextField is in focus
-            borderSide: BorderSide(color: Colors.white)),
-        hintText: 'Search', //Text that is displayed when nothing is entered.
-        hintStyle: TextStyle(
-          //Style of hintText
-          color: Colors.white60,
-          fontSize: 20,
-        ),
-      ),
-    );
-  }
+  // Widget _searchTextField() {
+  //   return TextField(
+  //     onChanged: (String s) {
+  //       // setState(() {
+  //       //   _searchIndexList = [];
+  //       //   for (int i = 0; i < newsHeadlines.length; i++) {
+  //       //     if (newsHeadlines[i].title.contains(s)) {
+  //       //       _searchIndexList.add(i);
+  //       //     }
+  //       //   }
+  //       // });
+  //     },
+  //     autofocus: true,
+  //     cursorColor: Colors.white,
+  //     style: const TextStyle(
+  //       color: Colors.white,
+  //       fontSize: 20,
+  //     ),
+  //     textInputAction:
+  //     TextInputAction.search, //Specify the action button on the keyboard
+  //     decoration: const InputDecoration(
+  //       //Style of TextField
+  //       enabledBorder: UnderlineInputBorder(
+  //         //Default TextField border
+  //           borderSide: BorderSide(color: Colors.white)),
+  //       focusedBorder: UnderlineInputBorder(
+  //         //Borders when a TextField is in focus
+  //           borderSide: BorderSide(color: Colors.white)),
+  //       hintText: 'Search', //Text that is displayed when nothing is entered.
+  //       hintStyle: TextStyle(
+  //         //Style of hintText
+  //         color: Colors.white60,
+  //         fontSize: 20,
+  //       ),
+  //     ),
+  //   );
+  // }
 }
