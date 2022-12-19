@@ -34,6 +34,7 @@ class AccountProvider extends ChangeNotifier {
   var password;
   List<DataModel> classmates = [];
   List<DataModel> teachers = [];
+  List<DataModel> staff = [];
   Future<String> registerUser({
     required String fname,
     required String lname,
@@ -231,7 +232,7 @@ class AccountProvider extends ChangeNotifier {
     try {
       var response = await http.get(uri);
 
-      print(response.statusCode);
+      
       if (response.statusCode == 200) {
         var decodedData = jsonDecode(response.body);
         for (int i = 0; i < decodedData["Result"].length; i++) {
@@ -255,9 +256,9 @@ class AccountProvider extends ChangeNotifier {
     return result;
   }
 
-  Future<String> getStudent() async {
+  Future<String> getTeachers() async {
     notifyListeners();
-    classmates.clear();
+    teachers.clear();
     String result = Constants.SUCCESS;
 
     Uri uri = Uri.parse("${Constants.baseUrl}/teachers");
@@ -265,14 +266,46 @@ class AccountProvider extends ChangeNotifier {
     try {
       var response = await http.get(uri);
 
+      
+      if (response.statusCode == 200) {
+        var decodedData = jsonDecode(response.body);
+        print(decodedData);
+        for (int i = 0; i < decodedData["Result"].length; i++) {
+          if (AlluserData.branch == decodedData['Result'][i]['branch']) {
+            teachers.add(DataModel.fromJson(decodedData["Result"][i]));
+          }
+        }
+
+        notifyListeners();
+        result = Constants.SUCCESS;
+      } else {
+        result = Constants.FAILED;
+      }
+    } catch (e) {
+      result = Constants.FAILED;
+    }
+
+    notifyListeners();
+
+    return result;
+  }
+
+  Future<String> getstaff() async {
+    notifyListeners();
+    staff.clear();
+    String result = Constants.SUCCESS;
+
+    Uri uri = Uri.parse("${Constants.baseUrl}/staff");
+
+    try {
+      var response = await http.get(uri);
+
       print(response.statusCode);
       if (response.statusCode == 200) {
         var decodedData = jsonDecode(response.body);
+        print(decodedData);
         for (int i = 0; i < decodedData["Result"].length; i++) {
-          if (AlluserData.branch == decodedData['Result'][i]['branch'] &&
-              AlluserData.year == decodedData['Result'][i]['year']) {
-            teachers.add(DataModel.fromJson(decodedData["Result"][i]));
-          }
+          staff.add(DataModel.fromJson(decodedData["Result"][i]));
         }
 
         notifyListeners();

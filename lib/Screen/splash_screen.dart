@@ -31,15 +31,25 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             MaterialPageRoute(builder: (context) => const Login_page()));
       } else {
         // ignore: use_build_context_synchronously
-        await ref.read(accountProvider).login(
+
+        final result = await ref.read(accountProvider).login(
               credential: username.toString(),
               pass: password.toString(),
               // role: accountRole.toString()
             );
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: ((context) => const HostScreen())),
-            (route) => false);
+
+        if (result == 'success') {
+          // ignore: use_build_context_synchronously
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: ((context) => const HostScreen())),
+              (route) => false);
+        } else {
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              backgroundColor: Colors.green,
+              content: Text("Invalid Credentials, User not Found!!")));
+        }
       }
     });
   }

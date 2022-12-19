@@ -18,12 +18,14 @@ class _MemberScreenState extends ConsumerState<MemberScreen> {
     // TODO: implement initState
 
     super.initState();
-    _myGroup();
+    _members();
   }
 
-  _myGroup() async {
+  _members() async {
     var viewUserData = ref.read(accountProvider);
     viewUserData.getStudents();
+    viewUserData.getTeachers();
+    viewUserData.getstaff();
   }
 
   @override
@@ -117,7 +119,7 @@ class _MemberScreenState extends ConsumerState<MemberScreen> {
                     image: DecorationImage(
                         fit: BoxFit.fill,
                         image: NetworkImage(
-                          "${Constants.imageUrl}${viewData.classmates[index].profile}",
+                          "${Constants.imageUrl}/${viewData.classmates[index].profile}",
                         )),
                     borderRadius: BorderRadius.circular(10),
                     color: const Color(0xFFCFCFD0)),
@@ -160,9 +162,11 @@ class _MemberScreenState extends ConsumerState<MemberScreen> {
   }
 
   Widget _teachers() {
+    var viewData = ref.watch(accountProvider);
+    print(viewData.teachers.length);
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: 2,
+        itemCount: viewData.teachers.length,
         itemBuilder: (BuildContext context, int index) {
           return Row(
             // mainAxisAlignment: MainAxisAlignment.spaceAr,
@@ -173,19 +177,27 @@ class _MemberScreenState extends ConsumerState<MemberScreen> {
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                    image: const DecorationImage(
+                    image: DecorationImage(
                         fit: BoxFit.fill,
                         image: NetworkImage(
-                          "https://images.unsplash.com/photo-1670968982568-51116a0770c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1926&q=80",
+                          "${Constants.imageUrl}/${viewData.teachers[index].profile}",
                         )),
                     borderRadius: BorderRadius.circular(10),
                     color: const Color(0xFFCFCFD0)),
               ),
               Container(
                 width: 160,
-                child: const Text("Garvita Singh ",
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(viewData.teachers[index].fName.toString(),
+                        style: const TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.bold)),
+                    Text(viewData.classmates[index].mobile.toString(),
+                        style: const TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold)),
+                  ],
+                ),
               ),
               Row(
                 children: [
@@ -211,9 +223,10 @@ class _MemberScreenState extends ConsumerState<MemberScreen> {
   }
 
   Widget _staff() {
+    var viewData = ref.watch(accountProvider);
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: 2,
+        itemCount: viewData.staff.length,
         itemBuilder: (BuildContext context, int index) {
           return Row(
             // mainAxisAlignment: MainAxisAlignment.spaceAr,
@@ -224,17 +237,17 @@ class _MemberScreenState extends ConsumerState<MemberScreen> {
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                    image: const DecorationImage(
+                    image: DecorationImage(
                         fit: BoxFit.fill,
                         image: NetworkImage(
-                          "https://images.unsplash.com/photo-1670968982568-51116a0770c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1926&q=80",
+                          "${Constants.imageUrl}/${viewData.staff[index].profile}",
                         )),
                     borderRadius: BorderRadius.circular(10),
                     color: const Color(0xFFCFCFD0)),
               ),
               Container(
                 width: 160,
-                child: const Text("Garvita Singh ",
+                child: Text(viewData.staff[index].fName.toString(),
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
               ),
