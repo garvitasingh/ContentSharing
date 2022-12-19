@@ -186,6 +186,7 @@ class GroupProvider extends ChangeNotifier {
       {required String groupName}) async{
     notifyListeners();
 
+    searchedGroup.clear();
     String result = Constants.SUCCESS;
 
     Uri uri = Uri.parse("${Constants.baseUrl}/get-communit/${groupName}");

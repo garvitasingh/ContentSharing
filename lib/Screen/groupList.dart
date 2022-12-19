@@ -2,8 +2,11 @@ import 'package:clg_content_sharing/Screen/groupDetail.dart';
 import 'package:clg_content_sharing/utils/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class GroupList extends StatefulWidget {
+import '../provider/group_provider.dart';
+
+class GroupList extends ConsumerStatefulWidget {
   int? id;
   String? title, body , branch, year, admin;
   String? image;
@@ -19,10 +22,32 @@ class GroupList extends StatefulWidget {
 });
 
   @override
-  State<GroupList> createState() => _GroupListState();
+  ConsumerState<GroupList> createState() => _GroupListState();
 }
 
-class _GroupListState extends State<GroupList> {
+class _GroupListState extends ConsumerState<GroupList> {
+
+bool _isJoined = false;
+bool _isAdmin = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    commonGroup();
+  }
+
+  commonGroup() async{
+    var viewGroupData = ref.watch(groupProvider);
+    if(viewGroupData.joinedGroupId.contains(widget.id)){
+      print("joined");
+      _isJoined = false;
+    }
+    else{
+      _isJoined = true;
+    }
+    // if(viewGroupData.myGroupData.)
+  }
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -43,7 +68,13 @@ class _GroupListState extends State<GroupList> {
             errorWidget: (context,url,error) => new Icon(Icons.error),
           ),
         ),
-        
+        trailing:_isJoined
+            ? ElevatedButton(
+          child: Text("Join"),
+          onPressed: (){},
+        ) : _isAdmin?
+            SizedBox(width: 1,)
+            :Icon(Icons.shield_sharp)
       ),
     );
   }
