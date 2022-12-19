@@ -27,7 +27,7 @@ class CommonTextField extends StatelessWidget {
         decoration: BoxDecoration(
             color: Constants.LIGHT_GREEN,
             borderRadius: BorderRadius.circular(10)),
-        padding: EdgeInsets.symmetric(vertical: 2),
+        padding: const EdgeInsets.symmetric(vertical: 2),
         child: TextFormField(
             maxLines: 7,
             minLines: 1,
@@ -37,7 +37,7 @@ class CommonTextField extends StatelessWidget {
             controller: controller,
             decoration: InputDecoration(
                 label: Text("${level}"),
-                contentPadding: EdgeInsets.only(left: 12),
+                contentPadding: const EdgeInsets.only(left: 12),
                 hintText: hintText,
                 border: InputBorder.none,
                 hintStyle: TextStyle(color: Colors.black.withOpacity(0.2)))));
