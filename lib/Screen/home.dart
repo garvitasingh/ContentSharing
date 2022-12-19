@@ -13,7 +13,6 @@ import 'package:clg_content_sharing/provider/group_provider.dart';
 import 'package:clg_content_sharing/utils/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -100,44 +99,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                   tileMode: TileMode.mirror),
             ),
           ),
-          actions: !_searchBoolean
-              ? [
-                  IconButton(
-                      icon: const Icon(Icons.search),
-                      onPressed: () {
-                        setState(() {
-                          _searchBoolean = true;
-                        });
-                      }),
-                  IconButton(
-                    icon: const Icon(Icons.notifications),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const NotificationScreen()));
-                    },
-                  ),
-                ]
-              : [
-                  IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: () {
-                        setState(() {
-                          _searchBoolean = false;
-                        });
-                      }),
-                ],
-          title: !_searchBoolean
-              ? const Text(
-                  "Search in Feed",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w900),
-                )
-              : _searchTextField(),
         ),
         drawer: Drawer(
           child: ListView(
@@ -223,9 +184,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                 leading: const Icon(Icons.logout_rounded),
                 title: const Text("Log Out"),
                 onTap: () async {
-                  const storage = FlutterSecureStorage();
-                  await storage.write(key: "username", value: "false");
-                  await storage.write(key: "pass", value: "false");
                   Navigator.push(
                       context,
                       MaterialPageRoute(

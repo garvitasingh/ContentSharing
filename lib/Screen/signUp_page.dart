@@ -64,8 +64,6 @@ class _RegistrationState extends State<Registration> {
 
   final GlobalKey<FormState> _keyy = GlobalKey<FormState>();
 
-  //contrller for Google map
-
   @override
   void initState() {
     // TODO: implement initState
