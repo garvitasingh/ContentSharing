@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:clg_content_sharing/Screen/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import '../provider/account_provider.dart';
 import 'package:get/get.dart';
@@ -23,12 +24,11 @@ class _EditProfileState extends State<EditProfile> {
 
   final TextEditingController _rollNoController = TextEditingController();
 
-  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _yearController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _branchController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
-  final TextEditingController _specificatoinController = TextEditingController();
+  final TextEditingController _specificatoinController =
+      TextEditingController();
   ScrollController scrollController = ScrollController();
   final GlobalKey<FormState> _keyy = GlobalKey<FormState>();
   File? image;
@@ -46,45 +46,40 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+      appBar: AppBar(
           title: const Text("Edit Profile"),
-            elevation: 0,
-            flexibleSpace:Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [
-                      Constants.App_bar_blue,
-                      Constants.App_bar_light,
-                    ],
-                    begin: FractionalOffset(0.0, 0.0),
-                    end: FractionalOffset(1.0, 0.0),
-                    stops: [0.0, 1.0],
-                    tileMode: TileMode.mirror),
-              ),
-            )
-        ),
-        body: Form(
-          key: _keyy,
-          child: Consumer(builder: (context, ref, w) {
-            var viewData = ref.watch(accountProvider);
-            var readData = ref.read(accountProvider);
-            _fnameController.text = "${viewData.AlluserData.fName}";
-            _lnameController.text = "${viewData.AlluserData.lName}";
-            _emailController.text = "${viewData.AlluserData.email}";
-            _rollNoController.text = "${viewData.AlluserData.rollNumber}";
-            _mobileController.text = "${viewData.AlluserData.mobile}";
-            _branchController.text = "${viewData.AlluserData.branch}";
-            _yearController.text = "${viewData.AlluserData.year}";
-            _passwordController.text = "${viewData.AlluserData.password}";
-            // _specificatoinController.text = "${viewData.AlluserData.s}"
-            return SingleChildScrollView(
-              // physics: const BouncingScrollPhysics(),
-              controller: scrollController,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Stack(
+          elevation: 0,
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [
+                    Constants.App_bar_blue,
+                    Constants.App_bar_light,
+                  ],
+                  begin: FractionalOffset(0.0, 0.0),
+                  end: FractionalOffset(1.0, 0.0),
+                  stops: [0.0, 1.0],
+                  tileMode: TileMode.mirror),
+            ),
+          )),
+      body: Form(
+        key: _keyy,
+        child: Consumer(builder: (context, ref, w) {
+          var viewData = ref.watch(accountProvider);
+          var readData = ref.read(accountProvider);
+
+          // _specificatoinController.text = "${viewData.AlluserData.s}"
+          return SingleChildScrollView(
+            // physics: const BouncingScrollPhysics(),
+            controller: scrollController,
+            child: Padding(
+              padding: const EdgeInsets.all(30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Stack(
+                      alignment: Alignment.center,
                       children: [
                         CircleAvatar(
                           radius: 60,
@@ -136,185 +131,229 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ],
                     ),
-                    Container(
-                      height: 50,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 20),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'First Name',
-                          labelStyle: TextStyle(fontSize: 20.0),
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(),
-                        ),
-                        controller: _fnameController,
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "First Name",
+                    style: TextStyle(
+                        fontFamily: 'Rokkitt',
+                        color: Colors.black,
+                        fontSize: 17),
+                  ),
+                  TextField(
+                    controller: _fnameController,
+                    showCursor: true,
+                    decoration: InputDecoration(
+                      hintStyle: const TextStyle(
+                        fontFamily: 'Rokkitt',
                       ),
+                      contentPadding: const EdgeInsets.only(
+                        left: 20,
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: HexColor("D9D9D9"), width: 1)),
+                      // errorText: "jnnkn",
+
+                      hintText: "${viewData.AlluserData.fName}",
                     ),
-                    Container(
-                      height: 50,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 20),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Last Name',
-                          labelStyle: TextStyle(fontSize: 20.0),
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(),
-                        ),
-                        controller: _lnameController,
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    "Last Name",
+                    style: TextStyle(
+                        fontFamily: 'Rokkitt',
+                        color: Colors.black,
+                        fontSize: 17),
+                  ),
+                  TextField(
+                    controller: _lnameController,
+                    showCursor: true,
+                    decoration: InputDecoration(
+                      hintStyle: const TextStyle(
+                        fontFamily: 'Rokkitt',
                       ),
+                      contentPadding: const EdgeInsets.only(
+                        left: 20,
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: HexColor("D9D9D9"), width: 1)),
+                      // errorText: "jnnkn",
+
+                      hintText: "${viewData.AlluserData.lName}",
                     ),
-                    widget.role == 'student' || widget.role == 'teacher'
-                    ? Container(
-                      height: 50,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 20),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Email',
-                          labelStyle: TextStyle(fontSize: 20.0),
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(),
-                        ),
-                        controller: _emailController,
-                      ),
-                    )
-                        : const SizedBox(),
-                    widget.role == 'student' ?
-                    Container(
-                      height: 50,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 20),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Roll Number',
-                          labelStyle: TextStyle(fontSize: 20.0),
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(),
-                        ),
-                        controller: _rollNoController,
-                      ),
-                    ): const SizedBox(),
-                    Container(
-                      height: 50,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 20),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Mobile',
-                          labelStyle: TextStyle(fontSize: 20.0),
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(),
-                        ),
-                        controller: _mobileController,
-                      ),
-                    ),
-                    (widget.role == "student" || widget.role == "teacher")
-                        ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: 50,
-                          width: 70,
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 20),
-                          child: TextFormField(
-                            decoration: const InputDecoration(
-                              labelText: 'Branch',
-                              labelStyle: TextStyle(fontSize: 20.0),
-                              border: OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Mobile",
+                    style: TextStyle(
+                        fontFamily: 'Rokkitt',
+                        color: Colors.black,
+                        fontSize: 17),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: HexColor("D9D9D9"))),
+                    height: 50,
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              // ignore: prefer_const_literals_to_create_immutables
+                              children: [
+                                Text(
+                                  "${viewData.AlluserData.mobile}",
+                                  style: const TextStyle(
+                                      fontFamily: 'Rokkitt',
+                                      color: Colors.black,
+                                      fontSize: 18),
+                                ),
+                                const SizedBox(width: 10),
+                                const Icon(
+                                  Icons.check_circle_rounded,
+                                  color: Colors.green,
+                                  size: 18,
+                                ),
+                              ],
                             ),
-                            controller: _branchController,
-                          ),
+                          ],
                         ),
-                        (widget.role == "student")
-                            ? Container(
-                          alignment: Alignment.centerRight,
-                          height: 50,
-                          width: 150,
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 20),
-                          child: TextFormField(
-                            decoration: const InputDecoration(
-                              labelText: 'Year',
-                              labelStyle: TextStyle(fontSize: 20.0),
-                              border: OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(),
-                            ),
-                            controller: _yearController,
-                          ),
-                        ): const SizedBox(width: 5,)
-                      ],
-                    )
-                        : Container(
-                      height: 50,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 20),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Specification',
-                          labelStyle: TextStyle(fontSize: 20.0),
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(),
-                        ),
-                        controller: _specificatoinController,
                       ),
                     ),
-                    Container(
-                      height: 50,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 20),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Password',
-                          labelStyle: TextStyle(fontSize: 20.0),
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(),
-                        ),
-                        controller: _passwordController,
+                  ),
+                   const SizedBox(height: 10),
+                  const Text(
+                    "Roll Number",
+                    style: TextStyle(
+                        fontFamily: 'Rokkitt',
+                        color: Colors.black,
+                        fontSize: 17),
+                  ),
+                  TextField(
+                    controller: _rollNoController,
+                    showCursor: true,
+                    decoration: InputDecoration(
+                      hintStyle: const TextStyle(
+                        fontFamily: 'Rokkitt',
                       ),
+                      contentPadding: const EdgeInsets.only(
+                        left: 20,
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: HexColor("D9D9D9"), width: 1)),
+                      // errorText: "jnnkn",
+
+                      hintText: "${viewData.AlluserData.rollNumber}",
                     ),
-                    ElevatedButton(
-                        onPressed: () async{
-                          var result = await ref.read(accountProvider)
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Branch",
+                    style: TextStyle(
+                        fontFamily: 'Rokkitt',
+                        color: Colors.black,
+                        fontSize: 17),
+                  ),
+                  TextField(
+                    controller: _branchController,
+                    showCursor: true,
+                    decoration: InputDecoration(
+                      hintStyle: const TextStyle(
+                        fontFamily: 'Rokkitt',
+                      ),
+                      contentPadding: const EdgeInsets.only(
+                        left: 20,
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: HexColor("D9D9D9"), width: 1)),
+                      // errorText: "jnnkn",
+
+                      hintText: "${viewData.AlluserData.branch}",
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Year",
+                    style: TextStyle(
+                        fontFamily: 'Rokkitt',
+                        color: Colors.black,
+                        fontSize: 17),
+                  ),
+                  TextField(
+                    controller: _yearController,
+                    showCursor: true,
+                    decoration: InputDecoration(
+                      hintStyle: const TextStyle(
+                        fontFamily: 'Rokkitt',
+                      ),
+                      contentPadding: const EdgeInsets.only(
+                        left: 20,
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: HexColor("D9D9D9"), width: 1)),
+                      // errorText: "jnnkn",
+
+                      hintText: "${viewData.AlluserData.year}",
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 110, right: 100, top: 10),
+                    child: ElevatedButton(
+                        onPressed: () async {
+                          var result = await ref
+                              .read(accountProvider)
                               .updateProfile(
-                              fname: _fnameController.text,
-                              lname: _lnameController.text,
-                              email: _emailController.text,
-                              photo: image ??= null,
-                              roll_number: _rollNoController.text,
-                              phone: _mobileController.text,
-                              branch: _branchController.text,
-                              year: _yearController.text,
-                              role: widget.role,
-                              specification: "",
-                              pass: _passwordController.text,
-                              profile: "${viewData.AlluserData.profile}"
-                          );
+                                  fname: _fnameController.text,
+                                  lname: _lnameController.text,
+                                  photo: image ??= null,
+                                  roll_number: _rollNoController.text,
+                                  phone: _mobileController.text,
+                                  branch: _branchController.text,
+                                  year: _yearController.text,
+                                  role: widget.role,
+                                  profile: "${viewData.AlluserData.profile}");
 
                           if (result == Constants.SUCCESS) {
                             // ignore: use_build_context_synchronously
                             const CircularProgressIndicator();
                             Timer(const Duration(seconds: 5), () {
-                              Navigator.push(context,
+                              Navigator.push(
+                                  context,
                                   MaterialPageRoute(
-                                      builder: (context) => const ProfileScreen()));
+                                      builder: (context) =>
+                                          const ProfileScreen()));
                             });
                           }
                         },
                         style: ButtonStyle(
-                          shadowColor: MaterialStateProperty.all(Constants.App_bar_light),
-                          elevation: MaterialStateProperty.all(5)
-                          // backgroundColor: MaterialStateProperty.all(Colors.lightGreen),
-                        ),
-                        child: const Text("Update"))
-                  ],
-                ),
+                            shadowColor: MaterialStateProperty.all(
+                                Constants.App_bar_light),
+                            elevation: MaterialStateProperty.all(5)
+                            // backgroundColor: MaterialStateProperty.all(Colors.lightGreen),
+                            ),
+                        child: const Text("Update")),
+                  ),
+                  SizedBox(
+                    height: 200,
+                  )
+                ],
               ),
-            );
-          }),
-        ),
+            ),
+          );
+        }),
+      ),
     );
   }
 }

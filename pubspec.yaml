@@ -27,18 +27,20 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  cached_network_image: ^3.2.3
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
   flutter_riverpod: ^2.0.2
-  provider: ^6.0.4
+  flutter_secure_storage: ^7.0.1
   get: ^4.6.5
   google_fonts: ^3.0.1
+  hexcolor: ^3.0.1
   http: ^0.13.3
   http_parser: ^4.0.2
   image_picker: ^0.8.6
   persistent_bottom_nav_bar: ^5.0.2
-  cached_network_image: ^3.2.3
+  provider: ^6.0.4
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -56,6 +58,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/logo.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
@@ -69,8 +72,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
+  fonts:
+    - family: Rokkitt
+      fonts:
+        - asset: assets/fonts/Rokkitt-Regular.ttf
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf

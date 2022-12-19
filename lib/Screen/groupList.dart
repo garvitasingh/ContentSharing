@@ -51,11 +51,11 @@ bool _isAdmin = false;
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
       color: Constants.Icon_shadow,
       child: ListTile(
         onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => GroupDetail()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const GroupDetail()));
         },
         title: Text(widget.title!),
         subtitle: Text(widget.body!),
@@ -64,7 +64,7 @@ bool _isAdmin = false;
           width: 40,
           child: CachedNetworkImage(
             imageUrl: "${Constants.GroupImage}/${widget.image!}",
-            placeholder: (context,url) => CircularProgressIndicator(),
+            placeholder: (context,url) => const CircularProgressIndicator(),
             errorWidget: (context,url,error) => new Icon(Icons.error),
           ),
         ),

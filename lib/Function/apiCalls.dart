@@ -5,7 +5,6 @@ import 'dart:convert' as JSON;
 import '../utils/app_constant.dart';
 
 class ApiCalls {
-
   Future<String> termCondition() async {
     String result;
 

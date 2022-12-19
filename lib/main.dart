@@ -1,5 +1,6 @@
 import 'package:clg_content_sharing/Screen/home.dart';
 import 'package:clg_content_sharing/Screen/profile.dart';
+import 'package:clg_content_sharing/Screen/splash_screen.dart';
 import 'package:clg_content_sharing/provider/account_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: const Login_page(),
+          home: const SplashScreen(),
         );
       // );
 

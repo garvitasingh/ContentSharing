@@ -7,7 +7,7 @@ class CommonFatButton extends StatelessWidget {
   final String text;
   final Color? color;
   final Function() onPressed;
-  CommonFatButton({required this.text, this.color, required this.onPressed});
+  const CommonFatButton({required this.text, this.color, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +17,12 @@ class CommonFatButton extends StatelessWidget {
       height: height * 0.062,
       child: ElevatedButton(
           onPressed: onPressed,
-          child: Text(text,
-              style: textTheme.displayMedium?.copyWith(color: Colors.white)),
           style: ElevatedButton.styleFrom(
               primary: Constants.PRIMARY_COLOR,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)))),
+                  borderRadius: BorderRadius.circular(10))),
+          child: Text(text,
+              style: textTheme.displayMedium?.copyWith(color: Colors.white))),
     );
   }
 }
